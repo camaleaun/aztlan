@@ -27,6 +27,8 @@ class Assets extends Base {
 	public function init() {
 		add_action( 'wp_enqueue_scripts', $this->callback( 'enqueue_styles' ), 1 );
 		add_action( 'wp_enqueue_scripts', $this->callback( 'enqueue_script' ) );
+
+		add_action( 'enqueue_block_editor_assets', $this->callback( 'enqueue_block_editor_assets' ) );
 	}
 
 	/**
@@ -53,5 +55,14 @@ class Assets extends Base {
 		wp_enqueue_script( 'aztec-env-vendor', $this->assets_uri( 'vendor.js' ), [ 'jquery' ], self::VERSION, true );
 		wp_enqueue_script( 'aztec-env-app', $this->assets_uri( 'app.js' ), [], self::VERSION, true );
 		wp_localize_script( 'aztec-env-app', 'aztec_env', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+	}
+
+	/**
+	 * Enqueue block editor assets
+	 */
+	public function enqueue_block_editor_assets() {
+		wp_enqueue_script( 'aztec-env-editor', $this->assets_uri( 'editor.js' ), [], self::VERSION, true );
+
+		wp_enqueue_style( 'aztec-env-editor', $this->assets_uri( 'editor.css' ), [], self::VERSION );
 	}
 }
