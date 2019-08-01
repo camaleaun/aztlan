@@ -134,6 +134,9 @@ fi
 # Create symlink for `mu-plugins` directory if it dosen't exists
 [ -d ${MU_PLUGIN_DIR} ] || ln -fs ../../wp-packages/mu-plugins ${MU_PLUGIN_DIR}
 
+# Clear public/{themes, plugins} folder before install
+rm -R ${PUBLIC_PACKAGES_DIR}/{plugins,themes}/{*,.*}
+
 # Install themes languages
 ls -1 ${PACKAGES_THEME_LANGUAGES_DIR} | xargs -I % ln -sf ../../../../${PACKAGES_THEME_LANGUAGES_DIR}/% ${THEME_LANGUAGES_DIR}/
 
@@ -212,9 +215,8 @@ eval $( echo ${WP_BASH} -c "\"
 
 	# Update permalink structure according to install.env
 	wp --path=${WP_ROOT} rewrite structure ${PERMALINK}
-	
+
 \"" | sed -e 's/#.*$//' ) # `sed` removes the comments to run the commands on eval
 
 # if there is a git folder in the project, create a symbolic link to the hooks.
 [ -d "\.git" ] || bash -c "ln -s ../../environment/bin/lint .git/hooks/pre-commit"
-
