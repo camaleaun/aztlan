@@ -21,6 +21,9 @@ alias wp="${compose} run --rm wp --path=public/wp "
 ## Server
 alias server="${compose} up -d server"
 
+# Live reload
+alias live="${compose} up livereload"
+
 ## Node
 alias node="${compose} run --rm assets-node"
 alias assets-watch="node npm run watch"
@@ -43,7 +46,6 @@ alias phpqa-composer="${compose} run --rm phpqa-composer"
 alias db-export="wp db export - | gzip > environment/initdb/initdb.sql.gz"
 
 # Database reload
-
 alias db-reload="
 	[ -f environment/initdb/initdb.sql.gz ] &&
 		eval '

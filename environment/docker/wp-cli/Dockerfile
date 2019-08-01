@@ -17,7 +17,6 @@ RUN set -ex; \
         # Remove build dependencies
         apk del .build-deps
 
-
 ENV PATH=/app/cli/vendor/bin:$PATH
 
 # Install, enable and configure Xdebug

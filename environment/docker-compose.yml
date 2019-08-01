@@ -132,6 +132,18 @@ services:
       - ./xdebug/profiler:/tmp
       - ../:/app
 
+  # Live reload
+  livereload:
+    build:
+      context: ./docker/browser-sync
+    ports:
+      - "3000:3000"
+      - "3001:3001"
+    volumes:
+      - ../:/app
+    depends_on:
+      - server
+
 volumes:
   mysql_data:
     name: ${VOLUME_PREFIX}mysql_data
