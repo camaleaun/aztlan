@@ -22,7 +22,7 @@ alias wp="${compose} run --rm wp --path=public/wp "
 alias server="${compose} up -d server"
 
 # Live reload
-alias live="${compose} up livereload"
+alias live="${compose} up -d livereload"
 
 ## Node
 alias node="${compose} run --rm assets-node"
