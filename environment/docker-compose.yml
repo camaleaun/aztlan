@@ -119,6 +119,7 @@ services:
         - DEPLOYER_VERSION=latest
     volumes:
       - ../:/app:z
+      - ../deploy/.ssh:/root/.ssh:z
     env_file:
       - ./env/deploy.env
 
