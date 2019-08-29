@@ -49,10 +49,11 @@ alias phpqa-composer="${compose} run --rm phpqa-composer"
 alias db-export="wp db export - | gzip > environment/initdb/initdb.sql.gz"
 
 # Database reload
+# This command decompresses the database because a direct import can cause
+# memory overload and close bash.
 db_path="environment/initdb/"
 db_name="initdb.sql"
-alias db-reload="
-	[ -f ${db_path}${db_name}.gz ] &&
+alias db-reload="[ -f ${db_path}${db_name}.gz ] &&
 		eval '
 			wp db reset --yes &&
 			gunzip -cd ${db_path}${db_name}.gz > ${db_path}${db_name} &&
