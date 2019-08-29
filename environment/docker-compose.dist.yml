@@ -1,0 +1,9 @@
+# Development project infrastructure generated over the Docker
+version: "3.7"
+
+services:
+  # WP CLI
+  wp:
+    image: ${REGISTRY_ENDPOINT}/${REPOSITORY_NAME}:cli
+    env_file:
+      - ./env/app.env

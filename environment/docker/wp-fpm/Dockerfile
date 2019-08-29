@@ -62,3 +62,6 @@ RUN { \
 COPY docker-entrypoint.sh /usr/local/bin/
 
 WORKDIR /app
+
+FROM base AS distribution
+ADD dist.tar.gz /app
