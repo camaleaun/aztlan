@@ -48,7 +48,7 @@ check_prerequisites()
 
 	# Check if docker is installed
 	DOCKER=$(eval docker --version 2> /dev/null)
-	if [[ ! "${DOCKER}" =~ "version" ]]
+	if [ [ ! "${DOCKER}" =~ "version" ] ]
 	then
 		EXIT_CODE=1
 		echo 'Docker not found'
@@ -56,7 +56,7 @@ check_prerequisites()
 
 	# Check if docker-compose is installed and version is 1.23 or above
 	DOCKER_COMPOSE=$(eval docker-compose --version 2> /dev/null)
-	if [[ ! "${DOCKER_COMPOSE}" =~ "version" ]]
+	if [ [ ! "${DOCKER_COMPOSE}" =~ "version" ] ]
 	then
 		EXIT_CODE=1
 		echo 'Docker Compose not found'
@@ -66,18 +66,17 @@ check_prerequisites()
 		VERSION_MAJOR=$(echo $VERSION| cut -d'.' -f 1)
 		VERSION_MINOR=$(echo $VERSION| cut -d'.' -f 2)
 
-		if [[  ${VERSION_MAJOR} < ${DOCKER_COMPOSE_MAJOR}  ]]
+		if [ [ ${VERSION_MAJOR} < ${DOCKER_COMPOSE_MAJOR} ] ]
 		then
 			EXIT_CODE=1
 			echo "The version of docker-compose has to be ${DOCKER_COMPOSE_VERSION} or above"
 		else
-			if [[ ${VERSION_MINOR} < ${DOCKER_COMPOSE_MINOR} ]]
+			if [ [ ${VERSION_MINOR} < ${DOCKER_COMPOSE_MINOR} ] ]
 			then
 				EXIT_CODE=1
 				echo "The version of docker-compose has to be ${DOCKER_COMPOSE_VERSION} or above"
 			fi
 		fi
-
 	fi
 
 	[ ${EXIT_CODE} == 1 ] && exit
