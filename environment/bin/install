@@ -54,7 +54,7 @@ check_prerequisites()
 		echo 'Docker not found'
 	fi
 
-	# Check if docker-compose is installed and version is 1.24 or above
+	# Check if docker-compose is installed and version is 1.23 or above
 	DOCKER_COMPOSE=$(eval docker-compose --version 2> /dev/null)
 	if [[ ! "${DOCKER_COMPOSE}" =~ "version" ]]
 	then
@@ -80,8 +80,7 @@ check_prerequisites()
 
 	fi
 
-	[ ${EXIT_CODE} == 1 ] && echo "EXIT"
-	exit;
+	[ ${EXIT_CODE} == 1 ] && exit
 }
 
 
