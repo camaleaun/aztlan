@@ -39,6 +39,7 @@ parse_commandline ()
     done
 }
 
+# Check requisites
 check_prerequisites()
 {
 	EXIT_CODE=0
@@ -46,18 +47,16 @@ check_prerequisites()
 	DOCKER_COMPOSE_MAJOR=$(echo $DOCKER_COMPOSE_VERSION| cut -d'.' -f 1)
 	DOCKER_COMPOSE_MINOR=$(echo $DOCKER_COMPOSE_VERSION| cut -d'.' -f 2)
 
-	# Check if docker is installed
+	# Docker
 	DOCKER=$(eval docker --version 2> /dev/null)
-	if [ [ ! "${DOCKER}" =~ "version" ] ]
-	then
+	if [ ! "${DOCKER}" =~ "version" ]; then
 		EXIT_CODE=1
 		echo 'Docker not found'
 	fi
 
-	# Check if docker-compose is installed and version is 1.23 or above
+	# Ddocker Compose is installed and version >= 1.23
 	DOCKER_COMPOSE=$(eval docker-compose --version 2> /dev/null)
-	if [ [ ! "${DOCKER_COMPOSE}" =~ "version" ] ]
-	then
+	if [ ! "${DOCKER_COMPOSE}" =~ "version" ]; then
 		EXIT_CODE=1
 		echo 'Docker Compose not found'
 	else
@@ -66,13 +65,11 @@ check_prerequisites()
 		VERSION_MAJOR=$(echo $VERSION| cut -d'.' -f 1)
 		VERSION_MINOR=$(echo $VERSION| cut -d'.' -f 2)
 
-		if [ [ ${VERSION_MAJOR} < ${DOCKER_COMPOSE_MAJOR} ] ]
-		then
+		if [ ${VERSION_MAJOR} < ${DOCKER_COMPOSE_MAJOR} ]; then
 			EXIT_CODE=1
 			echo "The version of docker-compose has to be ${DOCKER_COMPOSE_VERSION} or above"
 		else
-			if [ [ ${VERSION_MINOR} < ${DOCKER_COMPOSE_MINOR} ] ]
-			then
+			if [ ${VERSION_MINOR} < ${DOCKER_COMPOSE_MINOR} ]; then
 				EXIT_CODE=1
 				echo "The version of docker-compose has to be ${DOCKER_COMPOSE_VERSION} or above"
 			fi
@@ -82,8 +79,6 @@ check_prerequisites()
 	[ ${EXIT_CODE} == 1 ] && exit
 }
 
-
-# check prerequisites of Aztlan
 check_prerequisites
 
 default_parameters_values
