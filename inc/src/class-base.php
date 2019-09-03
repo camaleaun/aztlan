@@ -39,4 +39,11 @@ abstract class Base {
 	public function callback( $function ) {
 		return [ $this->container->get( get_class( $this ) ), $function ];
 	}
+
+	/**
+	 * Check if the environment is in development mode
+	 */
+	public function is_development() {
+		return 'development' === getenv( 'ENV' );
+	}
 }
