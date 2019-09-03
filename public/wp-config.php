@@ -68,14 +68,8 @@ define( 'FS_METHOD', 'direct' );
 /**
  * Custom content directory.
  */
-if ( 'development' == getenv( 'ENV' ) ) {
-	define( 'WP_HOME', 'http://' . $_SERVER['HTTP_HOST'] );
-	define( 'WP_SITEURL', 'http://' . $_SERVER['HTTP_HOST'] . '/wp' );
-} else {
-	define( 'WP_HOME', getenv( 'WP_HOME' ) );
-	define( 'WP_SITEURL', getenv( 'WP_SITEURL' ) );
-}
-
+define( 'WP_HOME', getenv( 'WP_HOME' ) );
+define( 'WP_SITEURL', getenv( 'WP_SITEURL' ) );
 define( 'WP_CONTENT_DIR', dirname( __FILE__ ) . '/packages' );
 define( 'WP_CONTENT_URL', getenv( 'WP_HOME' ) . '/packages' );
 
