@@ -4,7 +4,7 @@ RUN apk update && apk upgrade
 
 RUN npm install -g livereload
 
-CMD livereload "assets,inc/src,themes" -e 'php,js,styl'
+CMD livereload "assets,inc/src,themes" -e 'php,js,jsx,styl'
 
 WORKDIR /app
 
