@@ -30,6 +30,11 @@ docker_compose() {
 #   None
 #######################################
 docker_compose_dist() {
+	# Load project variables
+	. $(dirname $BASH_SOURCE)/aztlan_variables.sh
+
   . ./environment/env/build.env
-  docker-compose -f environment/docker-compose.dist.yml $@
+  
+  REGISTRY_ENDPOINT=${REGISTRY_ENDPOINT} REPOSITORY_NAME=${REPOSITORY_NAME} \
+    docker-compose -p ${PROJECT}_dist -f environment/docker-compose.dist.yml $@
 }

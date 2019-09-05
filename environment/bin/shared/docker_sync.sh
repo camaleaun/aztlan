@@ -21,6 +21,12 @@ docker_sync() {
 }
 
 docker_sync_wait() {
+  # Load project variables
+	. $(dirname $BASH_SOURCE)/aztlan_variables.sh
+
+  # Returns if it isn't MacOS
+	[ 'Darwin' != ${OS} ] && return
+
   CURRENT_DIR=$(pwd)
   cd ${ENV_ROOT_PATH}
 

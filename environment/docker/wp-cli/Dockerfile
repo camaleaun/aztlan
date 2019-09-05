@@ -43,4 +43,5 @@ RUN { \
 USER www-data
 
 FROM base AS distribution
+COPY aztlan-install /usr/local/bin/
 ADD dist.tar.gz /app

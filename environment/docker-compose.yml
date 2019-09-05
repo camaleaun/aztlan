@@ -48,9 +48,11 @@ services:
       - smtp
     env_file:
       - ./env/app.env
+      - ./env/install.env
       - ./env/xdebug.env
     volumes:
       - ../:/app:z
+      - ./docker/wp-cli/aztlan-install:/usr/local/bin/aztlan-install:z
 
   # Node 8.2 with NPM/Yarn/npx
   assets-node:
