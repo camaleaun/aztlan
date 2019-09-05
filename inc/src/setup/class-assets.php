@@ -46,9 +46,13 @@ class Assets extends Base {
 		wp_enqueue_script( 'aztec-env-vendor', $this->assets_uri( 'vendor.js' ), array( 'jquery' ), self::VERSION, true );
 		wp_enqueue_script( 'aztec-env-app', $this->assets_uri( 'app.js' ), array(), self::VERSION, true );
 
-		// Append PHP data to JS
-		wp_localize_script( 'aztec-env-app', 'aztec_env', array(
-			'ajax_url' => admin_url( 'admin-ajax.php' )
-		) );
+		// Append PHP data to JS.
+		wp_localize_script(
+			'aztec-env-app',
+			'aztec_env',
+			array(
+				'ajax_url' => admin_url( 'admin-ajax.php' ),
+			)
+		);
 	}
 }

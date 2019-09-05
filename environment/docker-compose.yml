@@ -140,8 +140,6 @@ services:
       - 35729:35729
     volumes:
       - ../:/app
-    env_file:
-      - ./env/livereload.env
 
 volumes:
   mysql_data:
