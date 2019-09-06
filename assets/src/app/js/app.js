@@ -1,5 +1,4 @@
-const title = document.createElement( 'h1' );
-const content = document.createTextNode( 'Aztec WordPress Environment' );
+import Welcome from './welcome';
 
-title.appendChild( content );
-document.body.appendChild( title );
+const app = new Welcome();
+app.hello();

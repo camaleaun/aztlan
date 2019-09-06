@@ -1,52 +1,48 @@
 <?php
 /**
- * Configuração para gestão de deploy
+ * Deploy settings
  */
 namespace Deployer;
 
 require 'recipe/common.php';
 
-host('ambiente.aztecweb.net')
-    ->port(2201)
-    ->stage('staging')
-	->user('ambiente_staging')
-	->set('branch', '10-configuracao-do-deploy')
-	->set('deploy_path', '/home/ambiente_staging');
+host( getenv( 'DEP_STG_HOST' ) )
+	->port( getenv( 'DEP_STG_PORT' ) )
+	->stage( 'staging' )
+	->user( getenv( 'DEP_STG_USER' ) )
+	->set( 'branch', getenv( 'DEP_STG_BRANCH' ) )
+	->set( 'deploy_path', getenv( 'DEP_STG_PATH' ) );
 
+set( 'http_user', getenv( 'DEP_HTTP_USER' ) );
+set( 'repository', getenv( 'DEP_REPOSITORY' ) );
 
-
-set('ssh_multiplexing', false);
-
-set('http_user', 'www-data');
-set('repository', 'git@greatcode.aztecweb.net:aztecwebteam/ambiente.git');
-
-set('shared_files', [
+set( 'shared_files', array(
 	'environment/env/app.env',
 	'environment/env/install.env'
-]);
+) );
 
-set('shared_dirs', [
+set( 'shared_dirs', array(
 	'public/packages/uploads'
-]);
+) );
 
-set('writable_dirs', [
+set( 'writable_dirs', array(
 	'public/packages/uploads',
 	'public/packages/languages',
 	'public/packages/upgrade'
-]);
+) );
 
-task('deploy:install', function () {
-	run('cd {{release_path}} && environment/bin/install', [ 'timeout' => null ]);
-});
+task( 'deploy:install', function() {
+	run( 'cd {{release_path}} && environment/bin/install', [ 'timeout' => null ] );
+} );
 
 /**
- * Move arquivo app.env, se ele existe, da raiz para o diretório shared
+ * Move app.env to shared, if file exists
  */
-task('deploy:update_env', function() {
-	run('cd {{deploy_path}} && if [ -d env ]; then mkdir -p shared/environment/env/ && mv env/* shared/environment/env/ && rmdir env; fi');
-});
+task( 'deploy:update_env', function() {
+	run( 'cd {{deploy_path}} && if [ -d env ]; then mkdir -p shared/environment/env/ && mv env/* shared/environment/env/ && rmdir env; fi' );
+} );
 
-task('deploy', [
+task( 'deploy', array(
 	'deploy:prepare',
 	'deploy:lock',
 	'deploy:release',
@@ -60,4 +56,4 @@ task('deploy', [
 	'deploy:unlock',
 	'cleanup',
 	'success'
-]);
+) );

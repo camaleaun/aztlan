@@ -1,6 +1,6 @@
 <?php
 /**
- * Manage theme static files.
+ * Assets class
  *
  * @package Aztec
  */
@@ -11,18 +11,11 @@ use Aztec\Base;
 use DI\Container;
 
 /**
- * Manage application styles and scripts.
+ * Add Scripts and Styles
  */
 class Assets extends Base {
 	/**
-	 * Assets current version.
-	 *
-	 * @var string
-	 */
-	const VERSION = '0.1';
-
-	/**
-	 * Init.
+	 * Add hooks
 	 */
 	public function init() {
 		add_action( 'wp_enqueue_scripts', $this->callback( 'enqueue_styles' ), 1 );
@@ -32,7 +25,7 @@ class Assets extends Base {
 	}
 
 	/**
-	 * Return the assets directory url.
+	 * Get assets URI
 	 *
 	 * @param  string $path File path.
 	 * @return string
@@ -42,19 +35,27 @@ class Assets extends Base {
 	}
 
 	/**
-	 * Load application CSS.
+	 * Load application style
 	 */
 	public function enqueue_styles() {
-		wp_enqueue_style( 'aztec-env', $this->assets_uri( 'app.css' ), [], self::VERSION );
+		wp_enqueue_style( 'aztec-env', $this->assets_uri( 'app.css' ), array(), self::VERSION );
 	}
 
 	/**
-	 * Load application JS.
+	 * Load application script
 	 */
 	public function enqueue_script() {
-		wp_enqueue_script( 'aztec-env-vendor', $this->assets_uri( 'vendor.js' ), [ 'jquery' ], self::VERSION, true );
-		wp_enqueue_script( 'aztec-env-app', $this->assets_uri( 'app.js' ), [], self::VERSION, true );
-		wp_localize_script( 'aztec-env-app', 'aztec_env', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+		wp_enqueue_script( 'aztec-env-vendor', $this->assets_uri( 'vendor.js' ), array( 'jquery' ), self::VERSION, true );
+		wp_enqueue_script( 'aztec-env-app', $this->assets_uri( 'app.js' ), array(), self::VERSION, true );
+
+		// Append PHP data to JS.
+		wp_localize_script(
+			'aztec-env-app',
+			'aztec_env',
+			array(
+				'ajax_url' => admin_url( 'admin-ajax.php' ),
+			)
+		);
 	}
 
 	/**
