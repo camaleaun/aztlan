@@ -26,6 +26,7 @@ class Textdomain extends Base {
 	 */
 	public function load_textdomain() {
 		load_theme_textdomain( 'env-theme', get_stylesheet_directory() . '/languages' );
-		load_textdomain( 'env-theme_inc', ABSPATH . '../../inc/languages/env-theme_inc-pt_BR.mo' );
+		load_theme_textdomain( 'env-theme_inc', ABSPATH . '../../inc/languages' );
+		load_theme_textdomain( 'env-theme_assets', ABSPATH . '../../assets/languages' );
 	}
 }

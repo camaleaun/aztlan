@@ -4,9 +4,9 @@
  * Code used to load project Gutenberg editor blocks
  */
 
-// Scripts
+// Import all Scripts from all blocks
 import './blocks/*/editor.js';
+import './blocks/*/front.js';
 
-// Styles
-import './blocks/*/front.styl';
-import './blocks/*/editor.styl';
+// Import all Styles from all blocks
+import './editor/stylus/style.styl';

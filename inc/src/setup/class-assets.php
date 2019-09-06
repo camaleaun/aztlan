@@ -1,6 +1,6 @@
 <?php
 /**
- * Gerencia os arquivos estáticos do tema.
+ * Manage theme static files.
  *
  * @package Aztec
  */
@@ -11,11 +11,11 @@ use Aztec\Base;
 use DI\Container;
 
 /**
- * Manipula os estilos e scripts da aplicação.
+ * Manage application styles and scripts.
  */
 class Assets extends Base {
 	/**
-	 * Versão atual dos assets.
+	 * Assets current version.
 	 *
 	 * @var string
 	 */
@@ -32,9 +32,9 @@ class Assets extends Base {
 	}
 
 	/**
-	 * Retorna a URL do diretório assets
+	 * Return the assets directory url.
 	 *
-	 * @param  string $path Caminho do arquivo.
+	 * @param  string $path File path.
 	 * @return string
 	 */
 	private function assets_uri( $path ) {
@@ -42,14 +42,14 @@ class Assets extends Base {
 	}
 
 	/**
-	 * Carrega o CSS da aplicação.
+	 * Load application CSS.
 	 */
 	public function enqueue_styles() {
 		wp_enqueue_style( 'aztec-env', $this->assets_uri( 'app.css' ), [], self::VERSION );
 	}
 
 	/**
-	 * Carregar o JS da aplicação.
+	 * Load application JS.
 	 */
 	public function enqueue_script() {
 		wp_enqueue_script( 'aztec-env-vendor', $this->assets_uri( 'vendor.js' ), [ 'jquery' ], self::VERSION, true );
@@ -58,9 +58,10 @@ class Assets extends Base {
 	}
 
 	/**
-	 * Enqueue block editor assets
+	 * Enqueue block editor assets.
 	 */
 	public function enqueue_block_editor_assets() {
+		wp_enqueue_script( 'aztec-env-vendor', $this->assets_uri( 'vendor.js' ), [], self::VERSION, true );
 		wp_enqueue_script( 'aztec-env-editor', $this->assets_uri( 'editor.js' ), [], self::VERSION, true );
 
 		wp_enqueue_style( 'aztec-env-editor', $this->assets_uri( 'editor.css' ), [], self::VERSION );
