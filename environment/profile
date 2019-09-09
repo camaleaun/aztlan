@@ -22,6 +22,9 @@ function wp() {
 ## Server
 alias server="docker_compose up -d server"
 
+# Live reload
+alias livereload="${compose} up -d livereload"
+
 ## Node
 alias node="docker_compose run --rm assets-node"
 alias assets-watch="node npm run watch"

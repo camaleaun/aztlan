@@ -39,6 +39,48 @@ parse_commandline ()
     done
 }
 
+# Check requisites
+check_prerequisites()
+{
+	EXIT_CODE=0
+	DOCKER_COMPOSE_VERSION="1.23"
+	DOCKER_COMPOSE_MAJOR=$(echo $DOCKER_COMPOSE_VERSION| cut -d'.' -f 1)
+	DOCKER_COMPOSE_MINOR=$(echo $DOCKER_COMPOSE_VERSION| cut -d'.' -f 2)
+
+	# Docker
+	DOCKER=$(eval docker --version 2> /dev/null)
+	if ! [[ "${DOCKER}" =~ "version" ]]; then
+		EXIT_CODE=1
+		echo 'Docker not found'
+	fi
+
+	# Ddocker Compose is installed and version >= 1.23
+	DOCKER_COMPOSE=$(eval docker-compose --version 2> /dev/null)
+	if ! [[ "${DOCKER_COMPOSE}" =~ "version" ]]; then
+		EXIT_CODE=1
+		echo 'Docker Compose not found'
+	else
+		VERSION=$(echo $DOCKER_COMPOSE| cut -d' ' -f 3)
+
+		VERSION_MAJOR=$(echo $VERSION| cut -d'.' -f 1)
+		VERSION_MINOR=$(echo $VERSION| cut -d'.' -f 2)
+
+		if [[ ${VERSION_MAJOR} < ${DOCKER_COMPOSE_MAJOR} ]]; then
+			EXIT_CODE=1
+			echo "The version of docker-compose has to be ${DOCKER_COMPOSE_VERSION} or above"
+		else
+			if [[ ${VERSION_MINOR} < ${DOCKER_COMPOSE_MINOR} ]]; then
+				EXIT_CODE=1
+				echo "The version of docker-compose has to be ${DOCKER_COMPOSE_VERSION} or above"
+			fi
+		fi
+	fi
+
+	[ ${EXIT_CODE} == 1 ] && exit
+}
+
+check_prerequisites
+
 default_parameters_values
 parse_commandline "$@"
 
@@ -79,7 +121,7 @@ dotenv ${ENVIRONMENT_DIR}/env/app.env
 dotenv ${ENVIRONMENT_DIR}/env/install.env
 
 # Xdebug
-XDEBUG_DATA_DIR=${ENVIRONMENT_DIR}/xdebug
+XDEBUG_DATA_DIR=xdebug
 XDEBUG_PROFILER_DIR=${XDEBUG_DATA_DIR}/profiler
 XDEBUG_TRACE_DIR=${XDEBUG_DATA_DIR}/trace
 
@@ -161,7 +203,9 @@ bash -c "${WP_COMPOSER} ${COMPOSER_SUBCOMAND} ${COMPOSER_SUBCOMAND_ARGS}"
 
 # NPM
 bash -c "${NPM} ${NPM_SUBCOMAND}"
-[ ${UPDATE} = true ] || bash -c "${NPM} run build";
+[ ${ENV} = 'development' ] && WEBPACK_ENVIRONMENT="dev" || WEBPACK_ENVIRONMENT="build"
+
+[ ${UPDATE} = true ] || bash -c "${NPM} run ${WEBPACK_ENVIRONMENT}";
 
 # Install PHPQA packages
 bash -c "${PHPQA_COMPOSER} ${COMPOSER_SUBCOMAND}"
@@ -220,5 +264,5 @@ eval $( echo ${WP_BASH} -c "\"
 \"" | sed -e '/^#/d;s/[^\/]#.*$//' ) # `sed` removes the comments to run the commands on eval
 
 # if there is a git folder in the project, create a symbolic link to the hooks.
-[ -d "\.git" ] || bash -c "ln -fs ../../environment/bin/lint .git/hooks/pre-commit"
+[ -d ".git" ] && bash -c "ln -fs ../../environment/bin/lint .git/hooks/pre-commit"
 

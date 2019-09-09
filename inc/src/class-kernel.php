@@ -35,6 +35,10 @@ class Kernel {
 	 */
 	public function init() {
 		$init_classes = array(
+			// Aztlan.
+			\Aztec\Aztlan\Integration\Mail::class,
+			\Aztec\Aztlan\Integration\Livereload::class,
+
 			// Assets.
 			\Aztec\Setup\Assets::class,
 
