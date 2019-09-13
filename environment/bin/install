@@ -239,6 +239,9 @@ eval $( echo ${WP_BASH} -c "\"
     # Activate all plugins
     wp --path=${WP_ROOT} plugin activate --all;
 
+	# Generate JSON file for assets
+	wp i18n make-json assets/languages/aztlan_assets-${WP_LANG}.po --no-purge;
+
     # Install or update core language package
     wp --path=${WP_ROOT} language core is-installed ${WP_LANG} &&
         wp --path=${WP_ROOT} language core update ||
