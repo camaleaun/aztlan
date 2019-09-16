@@ -47,8 +47,13 @@ function cleanup {
 	fi
 }
 
-start
-cleanup
-download
-upgrade
-cleanup
+# RUN
+function run {
+	start
+	cleanup
+	download
+	upgrade
+	cleanup
+}
+
+run
