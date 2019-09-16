@@ -44,7 +44,7 @@ function upgrade {
 		fi
 
 		if ! $FOUND_FILE ; then
-			echo -e "\e[31m✖ $UPGRADE_DIR/aztlan-master/$file doesn't exists"
+			echo -e "\e[31m✖ $UPGRADE_DIR/aztlan-master/$file doesn't exist"
 		fi
 	done <$UPGRADEABLE_FILES
 }
