@@ -55,7 +55,7 @@ check_prerequisites()
 		echo "'docker' was not found"
 	fi
 
-	if ! hash docker-compose12 2>/dev/null
+	if ! hash docker-compose 2>/dev/null
 	then
 		EXIT_CODE=1
 		echo "'docker-compose' was not found"
