@@ -104,7 +104,7 @@ docker_compose run --rm wp-composer info | \
 PACKAGES_TYPE=(plugins themes)
 for TYPE in "${PACKAGES_TYPE[@]}"; do
   DEST_DIR=${ENV_ROOT_PATH}/public/packages/${TYPE}
-  sudo mkdir -p ${DEST_DIR}
+  mkdir -p ${DEST_DIR}
   find ${ENV_ROOT_PATH}/wp-packages/private/${TYPE} -name *.zip | xargs unzip -od ${DEST_DIR}
 done
 
