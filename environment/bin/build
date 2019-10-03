@@ -129,9 +129,9 @@ DEST_DIR=${ENV_ROOT_PATH}/public/packages/mu-plugins
 mkdir -p ${DEST_DIR}
 rsync -a ${ENV_ROOT_PATH}/wp-packages/mu-plugins/* ${DEST_DIR}
 
-# # Install Node packages and build assets to distribution
-# docker_compose run --rm assets-node npm ci
-# docker_compose run --rm assets-node npm run build
+# Install Node packages and build assets to distribution
+docker_compose run --rm assets-node npm ci
+docker_compose run --rm assets-node npm run build
 
 # Wait build process generated files to be synced with host
 docker_sync_wait assets/dist
